@@ -1,0 +1,103 @@
+{
+    "name": "odan/slim4-skeleton",
+    "description": "A Slim 4 skeleton",
+    "license": "MIT",
+    "type": "project",
+    "keywords": [
+        "slim-framework",
+        "skeleton",
+        "slim",
+        "slim4",
+        "apache"
+    ],
+    "require": {
+        "php": "^8.1",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "aws/aws-sdk-php": "^3.325",
+        "cakephp/chronos": "^2",
+        "cakephp/database": "^4",
+        "chillerlan/php-qrcode": "^4.3",
+        "fig/http-message-util": "^1.1",
+        "firebase/php-jwt": "^6.8",
+        "getbrevo/brevo-php": "^2.0",
+        "ilovepdf/ilovepdf-php": "^1.2",
+        "league/flysystem": "^3.15",
+        "league/flysystem-aws-s3-v3": "^3.15",
+        "league/flysystem-sftp-v3": "^3.15",
+        "league/plates": "^3.5",
+        "mailgun/mailgun-php": "^3.5",
+        "monolog/monolog": "^3",
+        "nyholm/psr7": "^1.8",
+        "nyholm/psr7-server": "^1.0",
+        "php-di/php-di": "^6 || ^7",
+        "phpoffice/phpword": "^1.1",
+        "ramsey/uuid": "^4.7",
+        "selective/basepath": "^2",
+        "sendgrid/sendgrid": "^8.1",
+        "slim/php-view": "^3.2",
+        "slim/slim": "^4",
+        "symfony/cache": "6.3.0",
+        "symfony/http-client": "^6.3",
+        "symfony/lock": "6.3.0",
+        "symfony/rate-limiter": "6.3.0",
+        "symfony/uid": "^6",
+        "symfony/validator": "^6"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3",
+        "mikey179/vfsstream": "^1.6",
+        "phpstan/phpstan": "1.*",
+        "phpunit/phpunit": "^10",
+        "selective/test-traits": "^3",
+        "squizlabs/php_codesniffer": "^3",
+        "symfony/console": "^6",
+        "symfony/dotenv": "^6",
+        "symfony/event-dispatcher": "^6",
+        "symfony/filesystem": "^6",
+        "symfony/finder": "^6"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        },
+        "files": [
+            "src/Support/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Test\\": "tests/"
+        }
+    },
+    "config": {
+        "process-timeout": 0,
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "php-http/discovery": true
+        }
+    },
+    "scripts": {
+        "cs:check": [
+            "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+            "php-cs-fixer fix --dry-run --format=txt --verbose --diff --config=.cs.php --ansi"
+        ],
+        "cs:fix": [
+            "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+            "php-cs-fixer fix --config=.cs.php --ansi --verbose"
+        ],
+        "sniffer:check": "phpcs --standard=phpcs.xml",
+        "sniffer:fix": "phpcbf --standard=phpcs.xml",
+        "stan": "phpstan analyse -c phpstan.neon --no-progress --ansi",
+        "start": "php -S localhost:8080 -t public/",
+        "test": "phpunit --configuration phpunit.xml --do-not-cache-result --colors=always --display-deprecations",
+        "test:all": [
+            "@cs:check",
+            "@sniffer:check",
+            "@stan",
+            "@test"
+        ],
+        "test:coverage": "php -d xdebug.mode=coverage -r \"require 'vendor/bin/phpunit';\" -- --configuration phpunit.xml --do-not-cache-result --colors=always --coverage-clover build/logs/clover.xml --coverage-html build/coverage"
+    }
+}

@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: apimex_app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./logs:/var/www/html/logs
+      - ./src/Documents:/var/www/html/src/Documents
+    depends_on:
+      - db
+    networks:
+      - apimex_network
+
+  db:
+    image: mysql:8.0
+    container_name: firmavirtual_apimex
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./resources/schema/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - apimex_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - apimex_network
+
+networks:
+  apimex_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local

@@ -1,0 +1,22 @@
+name: Deploy Private GitHub repository to cPanel (Staging)
+on:
+  push:
+    branches:
+      - staging
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.1.0
+      with:
+        fetch-depth: 2
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: ${{ secrets.FTP_SERVER_DEMO }}
+        username: ${{ secrets.FTP_USERNAME_DEMO }}
+        password: ${{ secrets.FTP_PASSWORD_DEMO }}
+        protocol: ftps
+        port: 21  # Opcional, puedes omitirlo si el puerto por defecto es 21
+        debug: true  # Agregar esta línea para más detalles de depuración

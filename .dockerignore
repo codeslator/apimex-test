@@ -1,0 +1,12 @@
+vendor/
+
+Dockerfile
+
+docker-compose.yml
+
+config/env.php
+
+.env
+.git
+.gitignore
+.dockerignore
