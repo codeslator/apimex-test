@@ -5,7 +5,7 @@ services:
     build: .
     container_name: apimex_app
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./logs:/var/www/html/logs
       - ./src/Documents:/var/www/html/src/Documents

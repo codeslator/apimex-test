@@ -25,9 +25,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
   pdo_mysql \
   mbstring \
   zip \
-  xml \
   fileinfo \
-  mbstring \
   xml \
   opcache
 
