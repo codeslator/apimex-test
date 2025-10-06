@@ -38,7 +38,7 @@ RUN chown -R www-data:www-data ${APACHE_DOCUMENT_ROOT} \
     && chmod -R 775 ${APACHE_DOCUMENT_ROOT}
 
 # Instalar dependencias PHP de la app
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install
 
 EXPOSE 80 443
 CMD ["apache2-foreground"]
