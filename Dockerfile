@@ -31,7 +31,7 @@ COPY ./apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY ./php.ini /usr/local/etc/php/php.ini
 
 # Copiar código de la app
-COPY . /var/www/html/
+COPY . .
 
 # Permisos
 RUN chown -R www-data:www-data ${APACHE_DOCUMENT_ROOT} \
