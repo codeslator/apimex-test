@@ -1,14 +1,14 @@
-version: '3.8'
-
 services:
   web:
     build: .
     container_name: apimex_app
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./logs:/var/www/html/logs
       - ./src/Documents:/var/www/html/src/Documents
+      - ./certs:/etc/letsencrypt    # certificados SSL
     depends_on:
       - db
     networks:
@@ -17,8 +17,7 @@ services:
   db:
     image: mysql:8.0
     container_name: firmavirtual_apimex
-    ports:
-      - "3306:3306"
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_NAME}
@@ -33,6 +32,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
+    restart: unless-stopped
     ports:
       - "8081:80"
     environment:
@@ -41,6 +41,16 @@ services:
       - PMA_PASSWORD=${DB_PASSWORD}
     depends_on:
       - db
+    networks:
+      - apimex_network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certs:/etc/letsencrypt
+    entrypoint: >
+      sh -c "trap exit TERM; while :; do certbot renew --webroot -w /var/www/html/public --quiet && docker exec apimex_app apachectl -k graceful; sleep 12h; done"
     networks:
       - apimex_network
 
