@@ -13,7 +13,6 @@ services:
       - db
     networks:
       - apimex_network
-    network_mode: host
 
   db:
     image: mysql:8.0
