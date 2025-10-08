@@ -6,8 +6,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./logs:/var/www/html/logs
-      - ./src/Documents:/var/www/html/src/Documents
+      - ./logs:/var/www/apimex/logs
+      - ./src/Documents:/var/www/apimex/src/Documents
       - ./certs:/etc/letsencrypt    # certificados SSL
     depends_on:
       - db
