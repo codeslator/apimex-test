@@ -7,7 +7,6 @@ services:
       - "443:443"
     volumes:
       - ./logs:/var/www/apimex/logs
-      - ./public:/var/www/apimex/public
       - ./src/Documents:/var/www/apimex/src/Documents
       - ./certs:/etc/letsencrypt    # certificados SSL
     depends_on:
@@ -50,7 +49,6 @@ services:
     container_name: certbot
     volumes:
       - ./certs:/etc/letsencrypt
-      - ./public:/var/www/apimex/public
     entrypoint: >
       sh -c "trap exit TERM; while :; do certbot renew --webroot -w /var/www/apimex/public --quiet && docker exec apimex_app apachectl -k graceful; sleep 12h; done"
     networks:
