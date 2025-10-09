@@ -2,7 +2,7 @@
 FROM php:8.3-apache
 
 # Variables de entorno
-ENV APACHE_DOCUMENT_ROOT=/var/www/apimex/public
+ENV APACHE_DOCUMENT_ROOT=/var/www/apimex
 
 WORKDIR ${APACHE_DOCUMENT_ROOT}
 
